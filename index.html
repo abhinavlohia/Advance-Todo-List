@@ -8,7 +8,7 @@
   </head>
   <body>
     <div class="main-container">
-      <div class="todo-list list">
+      <div class="list" id="todo-list">
         <div class="heading">
           <h1>Todo</h1>
         </div>
@@ -16,22 +16,26 @@
         <div class="list-item" draggable="true">Item 2</div>
         <div class="list-item" draggable="true">Item 3</div>
       </div>
-      <div class="underDev-list list">
+      <div class="list" id="underDev-list">
         <div class="heading">
           <h1>Under Development</h1>
         </div>
       </div>
-      <div class="underTest-list list">
+      <div class="underTest-list list" id="underTest-list">
         <div class="heading">
           <h1>Unit Testing</h1>
         </div>
       </div>
-      <div class="completed list">
+      <div class="completed list" id="completed-list">
         <div class="heading">
           <h1>Completed</h1>
         </div>
       </div>
     </div>
+
+    <script src="/Script/Todo_to_Dev.js"></script>
+    <script src="/Script/Dev_to_Test.js"></script>
+    <script src="/Script/Test_to_Complete.js"></script>
   </body>
 </html>
 
