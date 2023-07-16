@@ -14,94 +14,94 @@ function drag(event) {
 
 let processCompleted = false;
 function drop(event, column) {
-
-  processCompleted = false;
   event.preventDefault();
   const taskId = event.dataTransfer.getData("text");
-  const task = document.getElementById(taskId);
+  const taskElement = document.getElementById(taskId);
 
-  // Check if the task can be moved based on the role and current column
-  const currentColumn = task.parentNode.id;
+  const currentColumn = taskElement.parentNode.id;
 
   if (role === "developer") {
     if (currentColumn === "todo" && column === "in-dev") {
-      document.getElementById(column).appendChild(task);
-      processCompleted = true;
+      document.getElementById(column).appendChild(taskElement);
+      updateTaskColumn(taskId, column);
     } else if (currentColumn === "in-dev" && column === "in-testing") {
-      document.getElementById(column).appendChild(task);
-      processCompleted = true;
+      document.getElementById(column).appendChild(taskElement);
+      updateTaskColumn(taskId, column);
     } else if (currentColumn === "in-testing" && column === "in-dev") {
-      document.getElementById(column).appendChild(task);
-      processCompleted = true;
+      document.getElementById(column).appendChild(taskElement);
+      updateTaskColumn(taskId, column);
     } else if (currentColumn === "in-dev" && column === "todo") {
-      document.getElementById(column).appendChild(task);
-      processCompleted = true;
+      document.getElementById(column).appendChild(taskElement);
+      updateTaskColumn(taskId, column);
     }
   } else if (role === "tester") {
     if (currentColumn === "in-testing" && column === "completed") {
-      document.getElementById(column).appendChild(task);
-      processCompleted = true;
+      document.getElementById(column).appendChild(taskElement);
+      updateTaskColumn(taskId, column);
     } else if (currentColumn === "completed" && column === "in-testing") {
-      document.getElementById(column).appendChild(task);
-      processCompleted = true;
+      document.getElementById(column).appendChild(taskElement);
+      updateTaskColumn(taskId, column);
     }
   }
-
-  if (processCompleted) {
-    // Update the task's status in the browser storage
-    const tasks = JSON.parse(localStorage.getItem("tasks")) || {};
-    tasks[taskId] = column;
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }
 }
-let taskIdCounter = parseInt(localStorage.getItem("taskIdCounter")) || 1; // Counter to generate unique task IDs
 
+function updateTaskColumn(taskId, column) {
+  const tasks = JSON.parse(localStorage.getItem("tasks")) || {};
+  tasks[taskId].column = column;
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+
+
+let taskIdCounter = parseInt(localStorage.getItem("taskIdCounter")) || 1;
 function addNewTask() {
-  const taskHeading = prompt("Enter the task heading:"); // Prompt the user for task heading
+  const taskHeading = prompt("Enter the task heading:");
   if (taskHeading) {
-    const taskDescription = prompt("Enter the task description:"); // Prompt the user for task description
+    const taskDescription = prompt("Enter the task description:");
     if (taskDescription) {
-      const taskId = "Task " + taskIdCounter++; // Generate unique task ID
+      const taskId = "Task " + taskIdCounter++;
 
-      const taskElement = document.createElement("div"); // Create a new task element
+      const taskElement = document.createElement("div");
       taskElement.className = "list-item";
       taskElement.draggable = true;
       taskElement.ondragstart = drag;
       taskElement.id = taskId;
 
-      const taskHeadingElement = document.createElement("h4"); // Create an element for the task heading
-      // taskHeadingElement.innerText = taskHeading;
+      const taskHeadingElement = document.createElement("h4");
       taskHeadingElement.innerText = taskHeading;
 
-      const viewButton = document.createElement("button"); // Create a view button
+      const viewButton = document.createElement("button");
       viewButton.className = "viewTaskbtn";
       viewButton.innerHTML = '<i class="fa-solid fa-eye"></i>';
       viewButton.addEventListener("click", function () {
         openPopup(taskHeading, taskDescription);
       });
 
-      const deleteButton = document.createElement("button"); // Create a delete button
+      const deleteButton = document.createElement("button");
       deleteButton.className = "deleteTaskbtn";
       deleteButton.innerHTML = '<i class="fa-solid fa-xmark"></i>';
       deleteButton.addEventListener("click", deleteTask);
 
-      taskElement.appendChild(taskHeadingElement); // Add the task heading to the task element
-      taskElement.appendChild(viewButton); // Add the view button to the task element
-      taskElement.appendChild(deleteButton); // Add the view button to the task element
+      taskElement.appendChild(taskHeadingElement);
+      taskElement.appendChild(viewButton);
+      taskElement.appendChild(deleteButton);
 
-      const todoColumn = document.getElementById("todo"); // Get the TODO column
-      todoColumn.appendChild(taskElement); // Add the new task to the TODO column
+      const todoColumn = document.getElementById("todo");
+      todoColumn.appendChild(taskElement);
 
-      // Update the task's status and details in the browser storage
       const tasks = JSON.parse(localStorage.getItem("tasks")) || {};
-      tasks[taskId] = "todo";
+      tasks[taskId] = {
+        column: "todo",
+        heading: taskHeading,
+        description: taskDescription,
+      };
       localStorage.setItem("tasks", JSON.stringify(tasks));
 
-      // Store the updated taskIdCounter in the local storage
       localStorage.setItem("taskIdCounter", taskIdCounter.toString());
     }
   }
 }
+
 
 function openPopup(heading, description) {
   const popup = document.getElementById("popup");
@@ -118,53 +118,67 @@ function closePopup() {
   popup.style.display = "none";
 }
 
-// Restore the task positions and details from browser storage on page load
 window.onload = function () {
-  const tasks = JSON.parse(localStorage.getItem("tasks")) || {};
-  for (const taskId in tasks) {
-    const column = tasks[taskId];
-    const taskElement = document.createElement("div"); // Create a new task element
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || {};
+  const taskKeys = Object.keys(tasks);
+  let maxTaskId = 0;
+  for (const taskId of taskKeys) {
+    const task = tasks[taskId];
+    const taskColumn = task.column;
+    const taskHeading = task.heading;
+    const taskDescription = task.description;
+
+    const taskElement = document.createElement("div");
     taskElement.className = "list-item";
     taskElement.draggable = true;
     taskElement.ondragstart = drag;
     taskElement.id = taskId;
 
-    const taskHeadingElement = document.createElement("h4"); // Create an element for the task heading
-    taskHeadingElement.innerText = taskId;
+    const taskHeadingElement = document.createElement("h4");
+    taskHeadingElement.innerText = taskHeading;
 
-    const viewButton = document.createElement("button"); // Create a view button
+    const viewButton = document.createElement("button");
     viewButton.className = "viewTaskbtn";
     viewButton.innerHTML = '<i class="fa-solid fa-eye"></i>';
     viewButton.addEventListener("click", function () {
-      const taskDetails = tasks[taskId];
-      openPopup(taskDetails.heading, taskDetails.description);
+      openPopup(taskHeading, taskDescription);
     });
 
-    const deleteButton = document.createElement("button"); // Create a delete button
+    const deleteButton = document.createElement("button");
     deleteButton.className = "deleteTaskbtn";
     deleteButton.innerHTML = '<i class="fa-solid fa-xmark"></i>';
     deleteButton.addEventListener("click", deleteTask);
 
-    taskElement.appendChild(taskHeadingElement); // Add the task heading to the task element
-    taskElement.appendChild(viewButton); // Add the view button to the task element
-    taskElement.appendChild(deleteButton); // Add the view button to the task element
+    taskElement.appendChild(taskHeadingElement);
+    taskElement.appendChild(viewButton);
+    taskElement.appendChild(deleteButton);
 
-    const columnElement = document.getElementById(column);
+    const columnElement = document.getElementById(taskColumn);
     if (columnElement) {
       columnElement.appendChild(taskElement);
     }
+
+    const taskIdNumber = parseInt(taskId.replace("Task ", ""));
+    if (taskIdNumber > maxTaskId) {
+      maxTaskId = taskIdNumber;
+    }
   }
+
+  let taskIdCounter = maxTaskId + 1;
+  if (!Number.isFinite(taskIdCounter)) {
+    taskIdCounter = 1;
+  }
+  localStorage.setItem("taskIdCounter", taskIdCounter.toString());
 };
 
+
 function deleteTask(event) {
-  const taskElement = event.target.closest(".list-item"); // Find the closest parent task element
+  const taskElement = event.target.closest(".list-item");
   const taskId = taskElement.id;
 
-  // Remove the task element from the DOM
   if (taskElement.parentNode.id === 'todo') {
     taskElement.remove();
 
-    // Remove the task from the browser storage
     const tasks = JSON.parse(localStorage.getItem("tasks")) || {};
     delete tasks[taskId];
     localStorage.setItem("tasks", JSON.stringify(tasks));
