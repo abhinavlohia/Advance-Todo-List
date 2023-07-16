@@ -20,6 +20,13 @@
     <button id="addNewTask" onclick="addNewTask()">Add Task in Todo</button>
     <button id="deleteAllTask" onclick="deleteAllTask()">Delete all Tasks</button>
   </div>
+
+  <div id="popup" class="popup">
+    <h2 id="popup-heading"></h2>
+    <p id="popup-description"></p>
+    <button onclick="closePopup()">Close</button>
+  </div>
+
   <div class="main-container">
     <div class="list" id="todo" ondrop="drop(event, 'todo')" ondragover="allowDrop(event)">
       <div class="heading">
@@ -37,7 +44,7 @@
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div> -->
-      
+
     </div>
 
     <div class="list" id="in-dev" ondrop="drop(event, 'in-dev')" ondragover="allowDrop(event)">
