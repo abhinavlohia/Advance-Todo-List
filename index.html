@@ -16,13 +16,21 @@
       <option value="developer">Developer</option>
       <option value="tester">Tester</option>
     </select>
-    <button id = "addNewTask"onclick="addNewTask()">Add Task in Todo</button>
-    <button id = "deleteAllTask" onclick="deleteAllTask()">Delete all Tasks</button>
+    <button onclick="addNewTask()">Add Task in Todo</button>
   </div>
   <div class="main-container">
     <div class="list" id="todo" ondrop="drop(event, 'todo')" ondragover="allowDrop(event)">
       <div class="heading">
         <h1>Todo</h1>
+      </div>
+      <div class="list-item" draggable="true" ondragstart="drag(event)" id="task1">
+        Task 1
+      </div>
+      <div class="list-item" draggable="true" ondragstart="drag(event)" id="task2">
+        Task 2
+      </div>
+      <div class="list-item" draggable="true" ondragstart="drag(event)" id="task3">
+        Task 3
       </div>
     </div>
 

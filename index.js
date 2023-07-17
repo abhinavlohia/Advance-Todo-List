@@ -67,45 +67,16 @@ window.onload = function () {
 let taskIdCounter = 1; // Counter to generate unique task IDs
 
 function addNewTask() {
-  // const taskText = prompt("Enter the task description:"); // Prompt the user for task description
-  if (1) {
-    const taskId = "Task " + taskIdCounter++; // Generate unique task ID
+  const taskText = prompt("Enter the task description:"); // Prompt the user for task description
+  if (taskText) {
+    const taskId = "task" + taskIdCounter++; // Generate unique task ID
     const taskElement = document.createElement("div"); // Create a new task element
     taskElement.className = "list-item";
     taskElement.draggable = true;
     taskElement.ondragstart = drag;
     taskElement.id = taskId;
-    taskElement.innerText = taskElement.id;
-
+    taskElement.innerText = taskText;
+    
     document.getElementById("todo").appendChild(taskElement); // Add the new task to the TODO column
-
-    // Update the task's status in the browser storage
-    const tasks = JSON.parse(localStorage.getItem("tasks")) || {};
-    tasks[taskId] = "todo";
-    localStorage.setItem("tasks", JSON.stringify(tasks));
   }
-}
-
-// Restore the task positions from browser storage on page load
-window.onload = function () {
-  const tasks = JSON.parse(localStorage.getItem("tasks")) || {};
-  for (const taskId in tasks) {
-    const column = tasks[taskId];
-    const task = document.createElement("div");
-    task.className = "list-item";
-    task.draggable = true;
-    task.ondragstart = drag;
-    task.id = taskId;
-    task.innerText = taskId;
-
-    const columnElement = document.getElementById(column);
-    if (columnElement) {
-      columnElement.appendChild(task);
-    }
-  }
-};
-
-function deleteAllTask() {
-  localStorage.clear();
-  location.reload();
 }
