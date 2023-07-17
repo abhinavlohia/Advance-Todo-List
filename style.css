@@ -10,17 +10,15 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  
 }
 
 .list {
-
   margin-left: 100px;
   height: 700px;
   width: 200px;
   border: black solid;
   background-color: rgb(203, 203, 250);
-
+  margin-top: 60px;
 }
 
 .heading {
@@ -31,7 +29,6 @@
   background-color: yellowgreen;
   align-items: center;
   font-family: "Montserrat", sans-serif;
-  /* font-family: "Poppins", sans-serif; */
 }
 
 .heading h1 {
@@ -52,6 +49,4 @@
   margin-left: 22px;
   font-family: "Montserrat", sans-serif;
   background-color: rgb(246, 229, 197);
-
 }
-
