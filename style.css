@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  background-color: #f1f1f1;
+  background-color: whitesmoke;
   font-family: "Montserrat", sans-serif;
 }
 
@@ -136,6 +136,7 @@
 
 .deleteTaskbtn {
 
+  /* border: red solid; */
   border: none;
   background-color: rgb(246, 229, 197);
   height: 30px;
@@ -153,6 +154,7 @@
 }
 
 .fa-xmark {
+  /* color: #b30000; */
   color: black;
   font-size: 22px;
   background-color: transparent;
@@ -161,7 +163,7 @@
 }
 
 .fa-eye {
-
+  /* border: red solid; */
   font-size: 18px;
   background-color: transparent;
 }
@@ -169,16 +171,17 @@
 
 .deleteTaskbtn i:hover {
   color: red;
+  /* zoom:130%; */
 }
 
 .deleteTaskbtn i:active {
   color: black;
-
+  /* zoom: 140%; */
 }
 
 .viewTaskbtn i:hover {
   color: skyblue;
-
+  /* zoom:130%; */
 }
 
 .viewTaskbtn i:active {
@@ -204,10 +207,10 @@
 }
 
 .popup h2 {
-
+  /* margin-top: 20px; */
   margin-left: 40%;
   margin-bottom: 40px;
-
+  /* background-color: rgb(246, 229, 197); */
 }
 
 .popup p {
@@ -216,7 +219,7 @@
   margin-bottom: 0;
   word-wrap: break-word;
   white-space: normal;
-
+  /* background-color: rgb(246, 229, 197); */
 }
 
 .popup button {
