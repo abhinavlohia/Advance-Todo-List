@@ -5,7 +5,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
-  <script src="https://kit.fontawesome.com/fdf6f4b52f.js" crossorigin="anonymous"></script>
   <title>Advance Todo-List</title>
 </head>
 
@@ -17,27 +16,14 @@
       <option value="developer">Developer</option>
       <option value="tester">Tester</option>
     </select>
-    <button id="addNewTask" onclick="addNewTask()">Add Task in Todo</button>
-    <button id="deleteAllTask" onclick="deleteAllTask()">Delete all Tasks</button>
+    <button id = "addNewTask"onclick="addNewTask()">Add Task in Todo</button>
+    <button id = "deleteAllTask" onclick="deleteAllTask()">Delete all Tasks</button>
   </div>
   <div class="main-container">
     <div class="list" id="todo" ondrop="drop(event, 'todo')" ondragover="allowDrop(event)">
       <div class="heading">
         <h1>Todo</h1>
       </div>
-      <!-- <div class="list-item" draggable="true" ondragstart="drag(event)" id="task1">
-        Task 1
-        <button class="deleteTaskbtn">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <div class="list-item" draggable="true" ondragstart="drag(event)" id="task2">
-        Task 2
-        <button class="deleteTaskbtn">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div> -->
-      
     </div>
 
     <div class="list" id="in-dev" ondrop="drop(event, 'in-dev')" ondragover="allowDrop(event)">
